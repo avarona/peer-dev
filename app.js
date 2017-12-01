@@ -26,11 +26,15 @@ app.use(express.static(resolve(__dirname, 'public')))
 app.get('/*', (req, res) => res.sendFile(resolve(__dirname, 'public/index.html')));
 
 // server listening!
-app.listen(process.env.PORT || 3000, () => {
-  console.log(chalk.cyan('Server is listening'), chalk.yellow('http://localhost:3000'));
-  db.sync({force: false})
-  .then(() => {
-    console.log(chalk.cyan('Database is running'));
-  })
-  .catch(err => console.error(err));
-});
+if (!module.parent) { // don't run app.listen twice when testing
+  app.listen(process.env.PORT || 3000, () => {
+    console.log(chalk.cyan('Server is listening'), chalk.yellow('http://localhost:3000'));
+    db.sync({force: false})
+    .then(() => {
+      console.log(chalk.cyan('Database is running'));
+    })
+    .catch(err => console.error(err));
+  });
+}
+
+module.exports = app;
