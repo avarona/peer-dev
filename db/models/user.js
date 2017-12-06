@@ -6,10 +6,7 @@ const db = require('../_db.js');
 const User = db.define('users', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    allowNull: false
   },
   start_time: {
     type: Sequelize.STRING
@@ -25,11 +22,7 @@ const User = db.define('users', {
     }
   },
   timezone: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
   }
 });
 

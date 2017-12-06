@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // prepend '/api' to URIs
-app.use('/api', server);
+app.use('/', server);
 
 // serve static files from public
 app.use(express.static(resolve(__dirname, 'public')))
@@ -26,7 +26,7 @@ app.use(express.static(resolve(__dirname, 'public')))
 app.get('/*', (req, res) => res.sendFile(resolve(__dirname, 'public/index.html')));
 
 // server listening!
-if (!module.parent) { // don't run app.listen twice when testing
+if (!module.parent) {
   app.listen(process.env.PORT || 3000, () => {
     console.log(chalk.cyan('Server is listening'), chalk.yellow('http://localhost:3000'));
     db.sync({force: false})

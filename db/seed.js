@@ -4,11 +4,11 @@ const db = require('./_db');
 const users = require('./models/user.js');
 
 const seedUsers = () => db.Promise.map([
-  {id: '1', firstName: 'Homer', lastName: 'Simpson', email: 'homer@email.com', password: "nedsucks"},
-  {id: '2', firstName: 'Marge', lastName: 'Simpson', email: 'marge@email.com', password: 'lovemyfamily'},
-  {id: '3', firstName: 'Bart', lastName: 'Simpson', email: 'bart@email.com', password: 'kawabunga'},
-  {id: '4', firstName: 'Lisa', lastName: 'Simpson', email: 'lisa@email.com', password: 'harvardgrad'},
-  {id: '5', firstName: 'Maggie', lastName: 'Simpson', email: 'maggie@email.com', password: 'nowords'},
+  {id: '1', name: 'Homer Simpson', start_time: '6:00pm', end_time: '9:00pm', skype_id: 'homer123', timezone: 'EST'},
+  {id: '2', name: 'Marge Simpson', start_time: '6:00pm', end_time: '9:00pm', skype_id: 'marge123', timezone: 'EST'},
+  {id: '3', name: 'Bart Simpson', start_time: '6:00pm', end_time: '9:00pm', skype_id: 'bart123', timezone: 'EST'},
+  {id: '4', name: 'Lisa Simpson', start_time: '6:00pm', end_time: '9:00pm', skype_id: 'lisa123', timezone: 'EST'},
+  {id: '5', name: 'Maggie Simpson', start_time: '6:00pm', end_time: '9:00pm', skype_id: 'maggie123', timezone: 'EST'},
 ], user => db.model('users').create(user));
 
  db.sync({force: true})

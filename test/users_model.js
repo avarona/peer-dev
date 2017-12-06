@@ -1,6 +1,7 @@
 'use strict';
 
-const expect = require('chai').expect;
+const chai = require('chai');
+const expect = chai.expect;
 const User = require('../db/models/user');
 const db = require('../db/_db');
 
@@ -29,39 +30,52 @@ describe('User Model', function() {
 
   describe('Attributes definition', function() {
 
-    it('includes names, times, & skype_id', function() {
-      return user.save()
-      .then(function(user) {
+    it('includes names, times, & skype_id', function(done) {
+      user.save().then(function() {
         expect(user.name).to.equal('Darth Vader');
         expect(user.start_time).to.equal('6:00pm');
         expect(user.end_time).to.equal('9:00pm');
         expect(user.skype_id).to.equal('imyourdad');
         expect(user.timezone).to.equal('EST');
+        done();
       })
+      .catch(err => {
+        if(err) return done(err);
+        done();
+      });
     });
 
-    it('requires `name`', function() {
+    it('`name` cannot be null', function(done) {
       user.name = null;
-      return user.validate()
+      user.validate()
       .then(function() {
-        throw new Error('validation should fail when content is null');
-      },
-      function(result) {
-          expect(result).to.be.an.instanceOf(Error);
-      });
-    });
-
-    it('`name` cannot be blank', function() {
-      user.name = '';
-      return user.validate()
-      .then(function() {
-        throw new Error('validation should fail when content is blank')
-      },
-      function(result) {
+        throw new Error('name shouldn\'t be null!')
+      }, function(result) {
+        expect(user.dataValues.name).to.equal(null);
         expect(result).to.be.an.instanceOf(Error);
+        done();
+      })
+      .catch(err => {
+        if(err) return done(err);
+        done();
       });
     });
 
-  })
-
-})
+    it('`skype_id` cannot be blank', function(done) {
+      user.skype_id = '';
+      user.validate()
+      .then(function() {
+        throw new Error('skype_id shouldn\'t be blank!')
+      }, function(result) {
+        expect(user.dataValues.skype_id).to.equal('');
+        expect(result).to.be.an.instanceOf(Error);
+        done();
+      })
+      .catch(err => {
+        if(err) return done(err);
+        done();
+      });
+    });
+    
+  });
+});
