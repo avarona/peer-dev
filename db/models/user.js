@@ -4,40 +4,25 @@ const Sequelize = require('sequelize');
 const db = require('../_db.js');
 
 const User = db.define('users', {
-  firstName: {
+  name: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    allowNull: false
   },
-  lastName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+  start_time: {
+    type: Sequelize.STRING
   },
-  email: {
+  end_time: {
+    type:Sequelize.STRING
+  },
+  skype_id: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
     validate: {
-      notEmpty: true,
-      isEmail: true
+      notEmpty: true
     }
   },
-  password: {
-    allowNull: false,
+  timezone: {
     type: Sequelize.STRING
-  }
-}, {
-  getterMethods: {
-    fullName: function() {
-      const first = this.firstName[0].toUpperCase() + this.firstName.slice(1, this.firstName.length);
-      const last = this.lastName[0].toUpperCase() + this.lastName.slice(1, this.lastName.length);
-      return first + ' ' + last;
-    }
   }
 });
 
